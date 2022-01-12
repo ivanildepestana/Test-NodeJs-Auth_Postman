@@ -1,0 +1,983 @@
+{
+	"info": {
+		"_postman_id": "f088a48c-7b19-45a5-b8ae-212b2e6e65ba",
+		"name": "NodeJs Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Validation",
+			"item": [
+				{
+					"name": "Empty Form",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 422\", () =>{\r",
+									"        pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"signup messages\", () => {\r",
+									"    pm.expect(response.messages).to.be.an(\"array\");\r",
+									"    pm.expect(response.messages).to.deep.include(\r",
+									"        {\r",
+									"            \"messageId\": \"usernameValidationValidationId\",\r",
+									"            \"category\": \"validationMessage\",\r",
+									"            \"message\": \"Username is required\",\r",
+									"            \"messageForId\": \"username\",\r",
+									"        }\r",
+									"    );\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:8080"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-site"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"\",\"password\":\"\",\"confirmPassword\":\"\",\"age\": \"\",\"terms\":false}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/signup",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () =>{\r",
+									"        pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"accessToken\", response.accessToken);\r",
+									"pm.environment.set(\"username\", response.username);\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:8080"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-site"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"{{$randomEmail}}\",\"password\":\"1234@An\",\"confirmPassword\":\"1234@An\",\"age\":22,\"terms\":true}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/signup",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log Out",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlZpcmdpbmlhX1J1bnRlQGhvdG1haWwuY29tIiwiaWF0IjoxNjQwOTc1ODU1LCJleHAiOjE2NDA5NzU4ODV9.MYUHwOw2mH583_NeGLsptroViwReVNUY8VhnYnfF440"
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:8080"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-site"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/auth/logout?refreshToken={{refreshToken}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							],
+							"query": [
+								{
+									"key": "refreshToken",
+									"value": "{{refreshToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () =>{\r",
+									"        pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"accessToken\", response.accessToken);\r",
+									"\r",
+									"\r",
+									"\r",
+									"        \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:8080"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-site"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"password\":\"1234@An\",\"newPassword\":\"12345@An\",\"confirmPassword\":\"12345@An\"}\r\n\r\n\r\n"
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/changePassword",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"changePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log Out",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlZpcmdpbmlhX1J1bnRlQGhvdG1haWwuY29tIiwiaWF0IjoxNjQwOTc1ODU1LCJleHAiOjE2NDA5NzU4ODV9.MYUHwOw2mH583_NeGLsptroViwReVNUY8VhnYnfF440"
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:8080"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-site"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/auth/logout?refreshToken={{refreshToken}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							],
+							"query": [
+								{
+									"key": "refreshToken",
+									"value": "{{refreshToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign In  with new password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () =>{\r",
+									"        pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"accessToken\", response.accessToken);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:8080"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-site"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"{{username}}\",\"password\":\"12345@An\",\"returnSecureToken\":true\r\n}\r\n\r\n\r\n"
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/login",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Sessions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"UserSessions\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accepts",
+								"value": "application/json"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:8080"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-site"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+							},
+							{
+								"key": "If-None-Match",
+								"value": "W/\"1146-cwLALfAGr3dn3ew0PxVJFHtOLvw\""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"{{username}}\",\r\n \r\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/userSessions",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"userSessions"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Sessions Log Out",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () =>{\r",
+									"        pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"accessToken\", response.accessToken);\r",
+									"pm.environment.set(\"refreshToken\", response.refreshToken);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFzaGx5bm4zMUB5YWhvby5jb20iLCJpYXQiOjE2NDE5NDkyNzYsImV4cCI6MTY0MTk0OTMwNn0.hhc0izd4NlBb75kyf7uwAN-r8ggAFSW5RW9GiPmyP5w"
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:8080"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-site"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"{{username}}\",\"password\":\"12345@An\",\"confirmPassword\":\"12345@An\",\"age\":21,\"terms\":true}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/logout?refreshToken=refreshToken",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							],
+							"query": [
+								{
+									"key": "refreshToken",
+									"value": "refreshToken",
+									"description": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFzaGx5bm4zMUB5YWhvby5jb20iLCJpYXQiOjE2NDE5MzYxNjIsImV4cCI6MTY0MjAyMjU2Mn0.cY1708ZMsDPmfN6_huaJNMz8sGlS_8kfOJ80f2Fx37I"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Already Registered",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 422\", () => {\r",
+									"        pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"get user registered\", () => {\r",
+									"    pm.expect(response.messages).to.be.an(\"array\");\r",
+									"    pm.expect(response.messages).to.deep.include(\r",
+									"        {\r",
+									"            \"messageForId\":\"username\",\r",
+									"            \"messageIdPrefix\":\"usernameValidation\",\r",
+									"            \"message\":\"Username already registered\",\r",
+									"            \"category\":\"validationMessage\",\r",
+									"        }\r",
+									"    );\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:8080"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-site"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Referer",
+								"value": "http://localhost:8080/"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"{{username}}\",\"password\":\"12345@An\",\"confirmPassword\":\"12345@An\",\"age\":21,\"terms\":true}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/signup",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
